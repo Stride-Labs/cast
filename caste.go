@@ -10,7 +10,6 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
-	"math"
 	"reflect"
 	"strconv"
 	"strings"
@@ -247,14 +246,8 @@ func ToInt64E(i interface{}) (int64, error) {
 	case int8:
 		return int64(s), nil
 	case uint:
-		if s > math.MaxInt64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
-		}
 		return int64(s), nil
 	case uint64:
-		if s > math.MaxInt64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
-		}
 		return int64(s), nil
 	case uint32:
 		return int64(s), nil
@@ -263,14 +256,8 @@ func ToInt64E(i interface{}) (int64, error) {
 	case uint8:
 		return int64(s), nil
 	case float64:
-		if s > math.MaxInt64 || s < math.MinInt64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
-		}
 		return int64(s), nil
 	case float32:
-		if s > math.MaxInt64 || s < math.MinInt64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
-		}
 		return int64(s), nil
 	case string:
 		v, err := strconv.ParseInt(trimZeroDecimal(s), 0, 0)
@@ -634,16 +621,10 @@ func ToUint64E(i interface{}) (uint64, error) {
 		if s < 0 {
 			return 0, errNegativeNotAllowed
 		}
-		if s > math.MaxUint64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
-		}
 		return uint64(s), nil
 	case float64:
 		if s < 0 {
 			return 0, errNegativeNotAllowed
-		}
-		if s > math.MaxUint64 {
-			return 0, fmt.Errorf("overflow: unable to cast %v of type %T to int64", i, i)
 		}
 		return uint64(s), nil
 	case bool:
@@ -1492,12 +1473,4 @@ func trimZeroDecimal(s string) string {
 		}
 	}
 	return s
-}
-
-// Helper: Abs returns the absolute value of x.
-func Abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
 }
