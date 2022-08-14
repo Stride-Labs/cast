@@ -1493,11 +1493,3 @@ func trimZeroDecimal(s string) string {
 	}
 	return s
 }
-
-// Helper: Abs returns the absolute value of x.
-func Abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
